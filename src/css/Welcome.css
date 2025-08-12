@@ -1,0 +1,69 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.welcome-content h1 {
+  font-size: 3rem;
+  color: #333;
+}
+
+.welcome-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #0056b3;
+}
+
+.welcome-content h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.welcome-content h4 {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  color: #0056b3;
+}
+
+.welcome-content p {
+  font-size: 1.25rem;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 3rem;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 20px 30px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  font-size: large;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #ef7029;
+  color: white;
+  font-size: large;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
+}
