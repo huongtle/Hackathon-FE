@@ -1,21 +1,56 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import Loading from './Loading';
 import '../css/Chat.css';
 
 const ChatPage = () => {
-  const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hello! How can I help you today?' }
-  ]);
+  const navigate = useNavigate();
+  const [language, setLanguage] = useState('en');
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const recognitionRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  const text = {
+    vi: {
+      welcome: 'Xin chào! Tôi có thể giúp gì cho bạn hôm nay?',
+      placeholder: 'Gửi tin nhắn...',
+      voiceTitle: 'Nhập bằng giọng nói',
+      clearHistory: 'Xóa lịch sử',
+      exit: 'Thoát'
+    },
+    en: {
+      welcome: 'Hello! How can I help you today?',
+      placeholder: 'Send a message...',
+      voiceTitle: 'Voice input',
+      clearHistory: 'Clear History',
+      exit: 'Exit'
+    }
+  };
+
+  useEffect(() => {
+    const savedLanguage = sessionStorage.getItem('selectedLanguage') || 'en';
+    setLanguage(savedLanguage);
+    
+    const savedMessages = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+    if (savedMessages.length === 0) {
+      setMessages([{ sender: 'bot', text: text[savedLanguage].welcome }]);
+    } else {
+      setMessages(savedMessages);
+    }
+    
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
-      recognition.lang = 'vi-VN';//'en-US';
+      recognition.lang = language === 'vi' ? 'vi-VN' : 'en-US';
       recognition.interimResults = false;
 
       recognition.onresult = (event) => {
@@ -25,23 +60,36 @@ const ChatPage = () => {
       };
 
       recognition.onerror = () => setIsListening(false);
+      recognition.onend = () => setIsListening(false);
 
       recognitionRef.current = recognition;
-    } else {
-      alert('Speech Recognition not supported. Try using Chrome.');
     }
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    sessionStorage.setItem('chatHistory', JSON.stringify(messages));
   }, [messages]);
 
   const handleSend = () => {
     if (!input.trim()) return;
     const userMessage = { sender: 'user', text: input };
-    const botReply = { sender: 'bot', text: `You said: "${input}"` };
+    const botReply = { 
+      sender: 'bot', 
+      text: language === 'vi' ? `Bạn đã nói: "${input}"` : `You said: "${input}"` 
+    };
     setMessages(prev => [...prev, userMessage, botReply]);
     setInput('');
+  };
+
+  const clearHistory = () => {
+    const welcomeMsg = { sender: 'bot', text: text[language].welcome };
+    setMessages([welcomeMsg]);
+    sessionStorage.removeItem('chatHistory');
+  };
+
+  const handleExit = () => {
+    navigate('/');
   };
 
   const handleKeyDown = (e) => {
@@ -54,12 +102,35 @@ const ChatPage = () => {
   const handleVoiceClick = () => {
     if (recognitionRef.current && !isListening) {
       setIsListening(true);
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (error) {
+        setIsListening(false);
+      }
     }
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="chat-page">
+    <div className="chat-container">
+      <div className="robot-decoration robot-top-left">🤖</div>
+      <div className="robot-decoration robot-top-right">👩⚕️</div>
+      <div className="robot-decoration robot-bottom-left">👨⚕️</div>
+      <div className="robot-decoration robot-bottom-right">🤖</div>
+      <div className="chat-page">
+        <Navbar />
+      <div className="chat-header">
+        <button onClick={clearHistory} className="clear-btn">
+          {text[language].clearHistory}
+        </button>
+        <button onClick={handleExit} className="exit-btn">
+          {text[language].exit}
+        </button>
+      </div>
+
       <div className="chat-history">
         {messages.map((msg, idx) => (
           <div key={idx} className={`chat-message ${msg.sender}`}>
@@ -72,7 +143,7 @@ const ChatPage = () => {
       <div className="chat-input-area">
         <textarea
           rows="1"
-          placeholder="Send a message..."
+          placeholder={text[language].placeholder}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -80,11 +151,12 @@ const ChatPage = () => {
         <button
           className={`voice-button ${isListening ? 'listening' : ''}`}
           onClick={handleVoiceClick}
-          title="Voice input"
+          title={text[language].voiceTitle}
         >
           🎤
         </button>
         <button onClick={handleSend}>➤</button>
+        </div>
       </div>
     </div>
   );
