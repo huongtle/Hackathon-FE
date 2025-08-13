@@ -11,6 +11,43 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .language-toggle button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 8px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .language-toggle button:hover {
+    color: #00d4ff;
+  }
+
+  .language-toggle button.active {
+    color: #00d4ff;
+    font-weight: bold;
+  }
+
+  .language-toggle span {
+    color: #666;
+    font-size: 0.9rem;
+  }
   
   .nav-links {
     list-style: none;

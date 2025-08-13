@@ -2,6 +2,7 @@
   "name": "ai-hackathon-fe",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://yourusername.github.io/AI-Hackthon-FE",
   "dependencies": {
     "@apollo/client": "^3.13.9",
     "@testing-library/dom": "^10.4.1",

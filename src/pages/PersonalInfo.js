@@ -12,6 +12,14 @@ function PersonalInfo() {
   useEffect(() => {
     const selectedLanguage = sessionStorage.getItem('selectedLanguage') || 'en';
     setLanguage(selectedLanguage);
+
+    const handleLanguageChange = (event) => {
+      const newLanguage = sessionStorage.getItem('selectedLanguage') || 'en';
+      setLanguage(newLanguage);
+    };
+
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => window.removeEventListener('languageChanged', handleLanguageChange);
   }, []);
 
   const handleNext = () => {

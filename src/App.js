@@ -5,6 +5,7 @@ import Welcome from './pages/Welcome';
 import Triage from './pages/Triage';
 import Dashboard from './pages/Dashboard';
 import PersonalInfo from './pages/PersonalInfo';
+import ThankYou from './pages/ThankYou';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/triage" element={<Triage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/info" element={<PersonalInfo />} />
+          <Route path="/thankyou" element={<ThankYou />} />
         </Routes>
       </div>
     </Router>
