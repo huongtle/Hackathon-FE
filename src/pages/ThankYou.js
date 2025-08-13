@@ -50,7 +50,7 @@ function ThankYou() {
     return () => window.removeEventListener('languageChanged', handleLanguageChange);
   }, []);
 
-  const getSessionSummary = () => {
+  const getSessionSummary = (lang) => {
     const chatHistory = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
     const userMessages = chatHistory.filter(msg => msg.sender === 'user');
     
@@ -60,12 +60,12 @@ function ThankYou() {
     
     return {
       risk: risk,
-      advice: language === 'vi' ? 'Nên gặp bác sĩ trong vòng 24h' : 'Should see a doctor within 24 hours',
-      reason: language === 'vi' ? 'Các triệu chứng có thể liên quan đến tình trạng nghiêm trọng' : 'Symptoms may be related to a serious condition'
+      advice: lang === 'vi' ? 'Nên gặp bác sĩ trong vòng 24h' : 'Should see a doctor within 24 hours',
+      reason: lang === 'vi' ? 'Các triệu chứng có thể liên quan đến tình trạng nghiêm trọng' : 'Symptoms may be related to a serious condition'
     };
   };
 
-  const summary = getSessionSummary();
+  const summary = getSessionSummary(language);
 
   return (
     <div className="thankyou-container">
