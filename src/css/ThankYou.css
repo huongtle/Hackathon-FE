@@ -1,0 +1,122 @@
+.thankyou-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
+}
+
+.thankyou-content h1 {
+  font-size: 3rem;
+  color: #1e1e2f;
+  margin-bottom: 1rem;
+}
+
+.thankyou-content p {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.session-summary {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.session-summary h3 {
+  margin: 0;
+  color: #1e1e2f;
+}
+
+.summary-item {
+  display: flex;
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.summary-item span:first-child {
+  font-weight: bold;
+  color: #333;
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.summary-item span:last-child {
+  color: #0056b3;
+  font-weight: bold;
+  flex: 1;
+  text-align: left;
+}
+
+.risk-badge {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white !important;
+  display: inline-block;
+  width: fit-content;
+}
+
+.risk-badge.high {
+  background-color: #dc3545;
+}
+
+.risk-badge.medium {
+  background-color: #ffc107;
+}
+
+.risk-badge.low {
+  background-color: #28a745;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.home-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #0056b3;
+}
+
+.session-btn {
+  background-color: #ef7029;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.session-btn:hover {
+  background-color: #545b62;
+}

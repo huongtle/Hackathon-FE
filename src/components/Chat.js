@@ -89,7 +89,7 @@ const ChatPage = () => {
   };
 
   const handleExit = () => {
-    navigate('/');
+    navigate('/thankyou');
   };
 
   const handleKeyDown = (e) => {
