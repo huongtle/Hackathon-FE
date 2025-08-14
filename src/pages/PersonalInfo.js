@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ApiService } from '../services/api.service';
 import '../css/PersonalInfo.css';
 
 function PersonalInfo() {
@@ -14,7 +15,7 @@ function PersonalInfo() {
     setLanguage(selectedLanguage);
   }, []);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const newErrors = {};
     if (!gender) newErrors.gender = true;
     if (!age) newErrors.age = true;
@@ -22,9 +23,23 @@ function PersonalInfo() {
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
-      sessionStorage.setItem('userGender', gender);
-      sessionStorage.setItem('userAge', age);
-      navigate('/triage');
+      try {
+        await ApiService.savePersonInfo({
+          age: parseInt(age),
+          gender,
+          locale: language.toUpperCase()
+        });
+        
+        sessionStorage.setItem('userGender', gender);
+        sessionStorage.setItem('userAge', age);
+        navigate('/triage');
+      } catch (error) {
+        console.error('Failed to save person info:', error);
+        // Continue navigation even if API fails
+        sessionStorage.setItem('userGender', gender);
+        sessionStorage.setItem('userAge', age);
+        navigate('/triage');
+      }
     }
   };
 
