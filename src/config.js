@@ -1,0 +1,1 @@
+export const baseUrl = process.env.NODE_ENV === 'production' ? 'http://3.134.83.23:4000' : 'http://localhost:4000';

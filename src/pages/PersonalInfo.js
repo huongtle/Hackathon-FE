@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/PersonalInfo.css';
+import { baseUrl } from '../config';
 
 function PersonalInfo() {
   const [gender, setGender] = useState('');
@@ -32,6 +33,13 @@ function PersonalInfo() {
     if (Object.keys(newErrors).length === 0) {
       sessionStorage.setItem('userGender', gender);
       sessionStorage.setItem('userAge', age);
+      
+      fetch(`${baseUrl}/user`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gender, age: parseInt(age) })
+      });
+      
       navigate('/triage');
     }
   };
