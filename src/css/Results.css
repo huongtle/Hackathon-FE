@@ -147,6 +147,33 @@
   line-height: 1.5;
 }
 
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.results-header h2 {
+  margin: 0;
+}
+
+.complete-btn {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.complete-btn:hover {
+  background: #219a52;
+}
+
 @media (max-width: 768px) {
   .results-content {
     padding: 15px;
