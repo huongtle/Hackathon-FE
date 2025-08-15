@@ -96,7 +96,8 @@ const ChatPage = () => {
       console.log(response);
       let text ="";
       if (response.isCompleted){
-        text = `Here is your analysis result: ${JSON.stringify(response.analyzeResult)}`;
+        sessionStorage.setItem("results", JSON.stringify(response.analyzeResult));
+        navigate("/results");
       }else{
         text = response.replyMessage;
       }
