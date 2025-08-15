@@ -5,19 +5,19 @@ import Welcome from './pages/Welcome';
 import Triage from './pages/Triage';
 import Dashboard from './pages/Dashboard';
 import PersonalInfo from './pages/PersonalInfo';
+import Results from './pages/Results';
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <div style={{ padding: '20px' }}>
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/triage" element={<Triage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/info" element={<PersonalInfo />} />
+          <Route path="/results" element={<Results />} />
         </Routes>
-      </div>
     </Router>
   );
 }
