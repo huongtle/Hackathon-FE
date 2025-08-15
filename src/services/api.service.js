@@ -22,4 +22,25 @@ export class ApiService {
       throw error;
     }
   }
+
+  static async analyzeSymptoms(analysisData) {
+    try {
+      const response = await fetch(`${BASE_URL}/symptom-analysis/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(analysisData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('API error:', error);
+      throw error;
+    }
+  }
 }
