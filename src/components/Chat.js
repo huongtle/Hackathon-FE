@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ApiService } from '../services/api.service';
 import Navbar from './Navbar';
 import Loading from './Loading';
 import '../css/Chat.css';
@@ -71,15 +72,44 @@ const ChatPage = () => {
     sessionStorage.setItem('chatHistory', JSON.stringify(messages));
   }, [messages]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
-    const userMessage = { sender: 'user', text: input };
-    const botReply = { 
-      sender: 'bot', 
-      text: language === 'vi' ? `Bạn đã nói: "${input}"` : `You said: "${input}"` 
-    };
-    setMessages(prev => [...prev, userMessage, botReply]);
+    
+    const userMessage = { user: 'user', message: input };
+    setMessages(prev => [...prev, { sender: 'user', text: input }]);
     setInput('');
+    
+    try {
+      const chatHistory = [...messages.map(msg => ({
+        user: msg.sender,
+        message: msg.text
+      })), userMessage];
+      
+      const response = await ApiService.analyzeSymptoms({
+        locale: language.toUpperCase(),
+        userInfo: {
+          age: parseInt(sessionStorage.getItem('userAge') || '0'),
+          gender: sessionStorage.getItem('userGender') || ''
+        },
+        chat: chatHistory
+      });
+      console.log(response);
+      let text ="";
+      if (response.isCompleted){
+        text = `Here is your analysis result: ${JSON.stringify(response.analyzeResult)}`;
+      }else{
+        text = response.replyMessage;
+      }
+      const botReply = { sender: 'bot', text: text };
+      setMessages(prev => [...prev, botReply]);
+    } catch (error) {
+      console.error('Failed to analyze symptoms:', error);
+      const errorReply = { 
+        sender: 'bot', 
+        text: language === 'vi' ? 'Xin lỗi, có lỗi xảy ra. Vui lòng thử lại.' : 'Sorry, an error occurred. Please try again.' 
+      };
+      setMessages(prev => [...prev, errorReply]);
+    }
   };
 
   const clearHistory = () => {
