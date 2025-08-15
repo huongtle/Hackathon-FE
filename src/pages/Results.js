@@ -48,9 +48,9 @@ function Results() {
       try {
         const analyzeResult = JSON.parse(savedResults);
         return {
-          possibleConditions: analyzeResult.symptom || 'N/A',
+          possibleConditions: analyzeResult.result || 'N/A',
           source: analyzeResult.source || 'N/A',
-          sourceLink: analyzeResult.source || 'N/A',
+          sourceLink: analyzeResult.sourceLink || 'N/A',
           severityLevel: analyzeResult.risk || 'N/A',
           recommendedAction: analyzeResult.advice || 'N/A'
         };
@@ -101,10 +101,10 @@ function Results() {
       <div className="results-content">
 
         <div className="results-card">
-          {/* <div className="result-item">
+          <div className="result-item">
             <span className="result-label">{text[language].possibleConditions}</span>
             <span className="result-value">{resultData.possibleConditions}</span>
-          </div> */}
+          </div>
           <div className="result-item">
             <span className="result-label">{text[language].source}</span>
             <span className="result-value">{resultData.source}</span>
@@ -127,9 +127,8 @@ function Results() {
             <span className="result-label">{text[language].recommendedAction}</span>
             <span className={`result-value action-${getSeverityClass(resultData.severityLevel).replace('severity-', '')}`}>{resultData.recommendedAction}</span>
           </div>
-          <div className="result-item">
-            <span className="result-label">disclaimer</span>
-            <span className="result-value">{text[language].disclaimer}</span>
+          <div className="disclaimer-section">
+            <span className="disclaimer-text">{text[language].disclaimer}</span>
           </div>
         </div>
         <div className="results-header">
